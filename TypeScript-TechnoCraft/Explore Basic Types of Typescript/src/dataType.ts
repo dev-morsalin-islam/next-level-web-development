@@ -72,11 +72,26 @@ console.log("student tuple : ", student);
 
 var programmingLanguage : string [] = ["C", "C++", "Python", "Java", "JavaScript", "TypeScript"];
 
-const person : object = {
+// const person : object = {
+//     Name : "Morsalin Islam",
+//     age : 20,
+//     designation : "Backend Developer",
+//     language: programmingLanguage
+
+
+// }
+const person : {
+    readonly Name: string,
+    age: number,
+    designation ?: string,
+    language ?: string [],
+    dream : "Entrepreneour"
+} = {
     Name : "Morsalin Islam",
     age : 20,
     designation : "Backend Developer",
-    language: programmingLanguage
+    language: programmingLanguage,
+    dream: "Entrepreneour"
 
 
 }

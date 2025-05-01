@@ -45,6 +45,12 @@ student[0] = "Dev. Morsalin Islam"; // it must be a string
 console.log("student tuple : ", student);
 // ########## object ######
 var programmingLanguage = ["C", "C++", "Python", "Java", "JavaScript", "TypeScript"];
+// const person : object = {
+//     Name : "Morsalin Islam",
+//     age : 20,
+//     designation : "Backend Developer",
+//     language: programmingLanguage
+// }
 const person = {
     Name: "Morsalin Islam",
     age: 20,
