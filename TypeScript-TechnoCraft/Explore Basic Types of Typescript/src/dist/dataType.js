@@ -55,6 +55,7 @@ const person = {
     Name: "Morsalin Islam",
     age: 20,
     designation: "Backend Developer",
-    language: programmingLanguage
+    language: programmingLanguage,
+    dream: "Entrepreneour"
 };
 console.log("Person object : ", person);
