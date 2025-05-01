@@ -1,0 +1,20 @@
+Typescript has 2 type data
+
+1. Primitive
+2. Non Primitive
+
+1. Primitive Data Type:
+    a. number
+    b. String
+    c. boolean
+    d. null
+    e. undefine
+    f. symbol
+
+2. Non Primitive Data Type
+
+    a. array
+    b. tuple
+    c. object
+
+    
