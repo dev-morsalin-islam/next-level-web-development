@@ -22,3 +22,9 @@ const cow = {
     type: "animal"
 };
 console.log(cow);
+const allSubject = ["C", "C++", "DSA", "Digital Electronics"];
+console.log(allSubject);
+const add = {
+    addition: (num1, num2) => num1 + num2
+};
+console.log(add.addition(10, 20));

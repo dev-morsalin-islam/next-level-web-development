@@ -67,5 +67,22 @@ type SubjectMark<subject, mark> = {
 }
 
 
+interface SubjectList{
+    [index: number]: string
+}
+
+const allSubject: SubjectList = ["C", "C++", "DSA", "Digital Electronics"];
+
+console.log(allSubject);
+
+interface Add {
+    addition(num1: number,num2:number) : number
+  }
+
+  
+  const add: Add = {
+    addition: (num1, num2)  => num1 + num2
+  }
 
 
+  console.log(add.addition(10, 20));
