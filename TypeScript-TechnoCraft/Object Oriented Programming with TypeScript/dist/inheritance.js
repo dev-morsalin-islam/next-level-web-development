@@ -8,7 +8,7 @@
             this.sound = sound;
         }
         playSound() {
-            return `${this.name} make ${this.sound}`;
+            return `${this.name} make ${this.sound} sound`;
         }
     }
     class Cat extends Animal {
