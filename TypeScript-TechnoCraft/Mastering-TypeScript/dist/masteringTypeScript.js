@@ -50,6 +50,31 @@ class Car extends Vehicle {
         console.log(`Model: ${this._model}`);
     }
 }
-const myCar = new Car("Toyota", 2020, "Corolla");
-myCar.getInfo();
-myCar.getModel();
+// const myCar = new Car("Toyota", 2020, "Corolla");
+// myCar.getInfo(); // Output: "Make: Toyota, Year: 2020"
+// myCar.getModel(); // Output: "Model: Corolla"
+// working with type guard
+function processValue(value) {
+    if (typeof value == "string")
+        return value.length;
+    return value * 2;
+}
+// retrieve most expensive product
+function getMostExpensiveProduct(products) {
+    if (products.length == 0) {
+        return null;
+    }
+    var mostExpensiveProduct = products[0]; // assume 0th index product is most expensive
+    for (let i = 0; i < products.length; i++) {
+        if (products[i].price >= mostExpensiveProduct.price) {
+            mostExpensiveProduct = products[i]; // reassign most expensive product
+        }
+    }
+    return mostExpensiveProduct;
+}
+const products = [
+    { name: "Pen", price: 10 },
+    { name: "Notebook", price: 25 },
+    { name: "Bag", price: 50 }
+];
+console.log(getMostExpensiveProduct(products));
