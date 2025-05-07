@@ -38,5 +38,6 @@
     const myBankAccount = new Bank(1000);
     console.log(myBankAccount.getBalance); // using getter
     
+
     
 }
