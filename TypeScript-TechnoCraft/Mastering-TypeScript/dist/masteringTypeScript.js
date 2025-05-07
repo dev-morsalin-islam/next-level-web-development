@@ -1,5 +1,14 @@
 "use strict";
 // problem 1
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 function formatString(input, toUpper) {
     if (toUpper || typeof toUpper === "undefined")
         return input.toUpperCase();
@@ -95,4 +104,21 @@ function getDayType(day) {
     }
     return "Weekday";
 }
-console.log(getDayType(Day.Monday)); // output will be Weekday
+// console.log(getDayType(Day.Monday)); // output will be Weekday
+// ################ working with asynchronous task ################
+function squareAsync(n) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const promise = new Promise((resolve, reject) => {
+            setTimeout(() => {
+                if (n >= 0) {
+                    resolve(n * n);
+                }
+                else
+                    reject("Error: Negative");
+            }, 1000);
+        });
+        return promise;
+    });
+}
+squareAsync(10).then(console.log);
+squareAsync(-3).catch(console.error);
