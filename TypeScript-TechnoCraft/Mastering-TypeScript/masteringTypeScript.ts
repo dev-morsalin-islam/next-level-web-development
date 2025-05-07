@@ -98,3 +98,85 @@ function processValue(value: string | number): number
     if (typeof value == "string") return value.length;
     return value *  2;
 }
+
+// console.log(processValue("hello")); // output will be 5
+// console.log(processValue(5)); // output will be   10
+
+
+
+// ############### working with interface ##########
+
+interface Product{
+    name: string;
+    price: number;
+}
+
+// retrieve most expensive product
+function getMostExpensiveProduct(products: Product[]): Product | null
+{
+    if (products.length == 0){
+        return null;
+    }
+
+    var  mostExpensiveProduct = products[0]; // assume 0th index product is most expensive
+    for(let i = 0; i < products.length; i++)
+    {
+        if(products[i].price >= mostExpensiveProduct.price){
+            mostExpensiveProduct = products[i]; // reassign most expensive product
+        }
+    }
+    return mostExpensiveProduct;
+}
+
+// const products = [
+//     { name: "Pen", price: 10 },
+//     { name: "Notebook", price: 25 },
+//     { name: "Bag", price: 50 }
+//   ];
+  
+//   console.log(getMostExpensiveProduct(products));  // output will be =>  { name: "Bag", price: 50 }
+
+
+
+
+// ############ working with enum object ###########
+
+enum Day {
+    Monday,
+    Tuesday,
+    Wednesday,
+    Thursday,
+    Friday,
+    Saturday,
+    Sunday
+  }
+
+
+function getDayType(day: Day): string
+{
+    if (day === Day.Sunday || day === Day.Saturday){
+        return `Weekend`;
+    }
+    return "Weekday";
+}
+
+// console.log(getDayType(Day.Monday)); // output will be Weekday
+
+
+// ################ working with asynchronous task ################
+async function squareAsync(n: number): Promise<number>
+{
+    const promise = new Promise<number>((resolve, reject) =>{
+        setTimeout(()=>{
+            if (n >= 0){
+                resolve(n * n);
+            }
+            else reject("Error: Negative");
+        }, 1000)
+    })
+    return promise;
+}
+
+// squareAsync(4).then(console.log); // after 1 second latter it will give 16 as output
+squareAsync(-3).catch(console.error); // after 1 second latter it will give error as output
+
