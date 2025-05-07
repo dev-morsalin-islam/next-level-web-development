@@ -11,6 +11,8 @@
             super(name);
         }
 
+
+        
         move(){
             console.log(`${this.name} can fly`);
         }
@@ -21,5 +23,5 @@
 
     const myPlan = new Plan("XyZ");
     myPlan.move();
-    
+
 }
