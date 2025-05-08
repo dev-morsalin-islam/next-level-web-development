@@ -1,6 +1,6 @@
 
-// problem 1
 
+// ########### working with optional parameter and type guard ##############
 
 function formatString(input: string, toUpper?:boolean): string{
     if (toUpper || typeof toUpper === "undefined") 
@@ -14,7 +14,7 @@ function formatString(input: string, toUpper?:boolean): string{
 
 
 
-// problem 2
+// ###### filtering array of object inside function #######
 
 
 function filterByRating(items: { title: string; rating: number }[]) 
@@ -36,7 +36,7 @@ const books = [
 
 
 
-  // problem 3
+  // ######## concat multiple array receive from ...rest params ########
 
   function concatenateArrays<T>(...arrays: T[][]): T[]
   {
@@ -54,7 +54,7 @@ const books = [
 
 
 
-// problem 4
+// ######### working with inheritance and encapsulation ###########
 
 
 class Vehicle{
@@ -178,5 +178,5 @@ async function squareAsync(n: number): Promise<number>
 }
 
 // squareAsync(4).then(console.log); // after 1 second latter it will give 16 as output
-squareAsync(-3).catch(console.error); // after 1 second latter it will give error as output
+// squareAsync(-3).catch(console.error); // after 1 second latter it will give error as output
 
