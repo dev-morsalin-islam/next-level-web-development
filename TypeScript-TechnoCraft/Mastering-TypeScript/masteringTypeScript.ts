@@ -8,9 +8,9 @@ function formatString(input: string, toUpper?:boolean): string{
     else return input.toLocaleLowerCase();
 }
 
-// console.log(formatString("Hello",)); // it output will be HELLO
-// console.log(formatString("Hello",true)); // it output will be HELLO
-// console.log(formatString("Hello", false)); // it output will be hello
+console.log(formatString("Hello",)); // it output will be HELLO
+console.log(formatString("Hello",true)); // it output will be HELLO
+console.log(formatString("Hello", false)); // it output will be hello
 
 
 
@@ -31,7 +31,7 @@ const books = [
     { title: "Book C", rating: 5.0 }
   ];
   
-//   console.log(filterByRating(books)); // output will be [ { title: 'Book A', rating: 4.5 }, { title: 'Book C', rating: 5 } ]
+  console.log(filterByRating(books)); // output will be [ { title: 'Book A', rating: 4.5 }, { title: 'Book C', rating: 5 } ]
 
 
 
@@ -49,8 +49,8 @@ const books = [
   }
 
 
-//   console.log(concatenateArrays<string>(["a", "b"], ["c"])); // output will be [ 'a', 'b', 'c' ]
-//   console.log(concatenateArrays<number>([10, 20], [30])); // output will be [10, 20, 30]
+  console.log(concatenateArrays<string>(["a", "b"], ["c"])); // output will be [ 'a', 'b', 'c' ]
+  console.log(concatenateArrays<number>([10, 20], [30])); // output will be [10, 20, 30]
 
 
 
@@ -85,9 +85,9 @@ class Car extends Vehicle{
     }
 }
 
-// const myCar = new Car("Toyota", 2020, "Corolla");
-// myCar.getInfo(); // Output: "Make: Toyota, Year: 2020"
-// myCar.getModel(); // Output: "Model: Corolla"
+const myCar = new Car("Toyota", 2020, "Corolla");
+myCar.getInfo(); // Output: "Make: Toyota, Year: 2020"
+myCar.getModel(); // Output: "Model: Corolla"
 
 
 
@@ -99,8 +99,8 @@ function processValue(value: string | number): number
     return value *  2;
 }
 
-// console.log(processValue("hello")); // output will be 5
-// console.log(processValue(5)); // output will be   10
+console.log(processValue("hello")); // output will be 5
+console.log(processValue(5)); // output will be   10
 
 
 
@@ -128,13 +128,13 @@ function getMostExpensiveProduct(products: Product[]): Product | null
     return mostExpensiveProduct;
 }
 
-// const products = [
-//     { name: "Pen", price: 10 },
-//     { name: "Notebook", price: 25 },
-//     { name: "Bag", price: 50 }
-//   ];
+const products = [
+    { name: "Pen", price: 10 },
+    { name: "Notebook", price: 25 },
+    { name: "Bag", price: 50 }
+  ];
   
-//   console.log(getMostExpensiveProduct(products));  // output will be =>  { name: "Bag", price: 50 }
+  console.log(getMostExpensiveProduct(products));  // output will be =>  { name: "Bag", price: 50 }
 
 
 
@@ -160,7 +160,7 @@ function getDayType(day: Day): string
     return "Weekday";
 }
 
-// console.log(getDayType(Day.Monday)); // output will be Weekday
+console.log(getDayType(Day.Monday)); // output will be Weekday
 
 
 // ################ working with asynchronous task ################
@@ -177,6 +177,6 @@ async function squareAsync(n: number): Promise<number>
     return promise;
 }
 
-// squareAsync(4).then(console.log); // after 1 second latter it will give 16 as output
-// squareAsync(-3).catch(console.error); // after 1 second latter it will give error as output
+squareAsync(4).then(console.log); // after 1 second latter it will give 16 as output
+squareAsync(-3).catch(console.error); // after 1 second latter it will give error as output
 
