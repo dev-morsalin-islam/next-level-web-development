@@ -14,7 +14,7 @@ CREATE TABLE  BOOK(
 -- INSERT DATA
 
 INSERT INTO BOOK (NAME, PRICE, AUTHOR) VALUES
-('Introduction to Algorithms', 700, 'Thomas H. Cormen'),
+('Introduction to Algorithms', 800, 'Thomas H. Cormen'),
 ('Effective Java', 480, 'Joshua Bloch'),
 ('Java Concurrency in Practice', 600, 'Brian Goetz'),
 ('Learning React', 430, 'Alex Banks'),
@@ -51,3 +51,14 @@ SELECT NAME AS "BOOK NAME", AUTHOR, PRICE
 
 SELECT NAME , AUTHOR, PRICE FROM BOOK
 	WHERE PRICE > 350;
+    
+
+-- WORKING WITH DISTINCT
+SELECT DISTINCT NAME, PRICE FROM BOOK;
+
+
+-- working with varialbe
+
+SET @var = 10;
+
+SELECT @var; 
