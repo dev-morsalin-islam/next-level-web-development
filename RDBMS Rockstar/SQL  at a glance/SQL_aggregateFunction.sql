@@ -29,7 +29,7 @@ UPDATE BOOK as B
 		From Book
     ) AS PriceLimit
     ON
-    B.Price Between PriceLimit.minPrice AND PriceLimit.maxPrice
+    B.Price Between PriceLimit.minPrice AND PriceLimit.maxPrice - 100
     SET B.Price = PriceLimit.maxPrice - 100;
     
 
