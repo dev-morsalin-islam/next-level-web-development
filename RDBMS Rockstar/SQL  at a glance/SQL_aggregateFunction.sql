@@ -18,4 +18,19 @@ UPDATE BOOK
     
 SET SQL_SAFE_UPDATES = TRUE;
 
+-- To same things without using variable
+
+SET SQL_SAFE_UPDATES = FALSE;
+UPDATE BOOK as B
+	JOIN(
+		Select 
+			MIN(Price) as minPrice,
+            MAX(Price) as maxPrice
+		From Book
+    ) AS PriceLimit
+    ON
+    B.Price Between PriceLimit.minPrice AND PriceLimit.maxPrice
+    SET B.Price = PriceLimit.maxPrice - 100;
+    
+
 SELECT * FROM BOOK;
