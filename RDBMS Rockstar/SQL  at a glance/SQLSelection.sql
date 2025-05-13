@@ -67,3 +67,10 @@ SELECT @var;
 -- working with order by
 SELECT NAME, AUTHOR, PRICE FROM BOOK
 	ORDER BY PRICE DESC;
+    
+-- SQL TOP SELECTION
+
+SELECT * FROM BOOK
+LIMIT 5;
+    
+    
