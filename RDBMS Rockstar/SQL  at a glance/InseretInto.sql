@@ -7,3 +7,11 @@ VALUES
 ('JavaScript a maro thaba', 23, 550, 'Jhankar Mahbub'),
 ('Learn SQL Easily' , 24, 600, 'Morsalin Islam');
 
+ -- ############## WORKING WITH SQL UPDATES TABLE DATA ################
+SET SQL_SAFE_UPDATES = FALSE; -- MODIFY SQL_SAFE_UPDATES 
+UPDATE  BOOK 
+SET PRICE = Price + 100; -- INCREASE PRICE
+SET SQL_SAFE_UPDATES = TRUE; -- AGAIN MODIFY
+
+
+SELECT * FROM BOOK;
