@@ -23,7 +23,8 @@ INSERT INTO ORDERS(ORDERID, CUSTOMERID, ORDERDATE)
 	VALUES
     (101, 2, '1996-09-18'),
     (102, 3, '1996-09-19'),
-    (103, 4, '1996-09-20');
+    (103, 4, '1996-09-20'),
+    (109, 10, '2025-05-15');
     
 
 -- INSERT NEW DATA IN CUSTOMERS TABLE
@@ -31,7 +32,53 @@ INSERT INTO CUSTOMERS(CUSTOMERID, NAME, COUNTRY)
 	VALUES
     (2, 'MORSALIN', 'BANGALDESH'),
     (3, 'MOTIUR RAHMAN', 'US'),
-    (4, 'RUKUNUZZAMAN', 'UK');
+    (4, 'RUKUNUZZAMAN', 'UK'),
+    (12, 'ALICE', 'GERMAN');
     
-SELECT * FROM CUSTOMERS;
+
+-- NOW LETS WORK WITH JOIN
+
+-- THERE ARE 4 TYPES OF JOIN
+/* 	THEY ARE
+	i) Inner Join (return records that have matching values in both table
+    ii) Left JOin ( returns all records form the left lable an d the matched records from the right table
+    iii) Right Join (returns all records from the right table and the matched records from the left table
+    iv) Full Join: Returns all records when there is a match in either left or right table
+*/
+
+
+-- Inner Join / JOIN
+
+
+
+SELECT * FROM ORDERS AS ORD -- RETURN JUST BOTH TABLE MATCHING RECORDS
+	INNER JOIN CUSTOMERS AS CR
+    ON ORD.CUSTOMERID = CR.CUSTOMERID;
     
+
+-- LEFT JOIN RETURN --> LEFT TABLE + RIGHT TABLE MATCH OUTPUT
+SELECT * FROM ORDERS AS ORD
+	LEFT JOIN CUSTOMERS AS CR
+    ON ORD.CUSTOMERID = CR.CUSTOMERID;
+
+-- RIGHT JOIN  RETURN --> RIGHT TABLE + LEFT TABLE MATCHED ROW
+
+SELECT * FROM ORDERS AS ORD
+	RIGHT JOIN CUSTOMERS AS CR
+    ON ORD.CUSTOMERID = CR.CUSTOMERID;
+    
+    
+-- FULL JOIN RETURN BOTH TABLE MATCHED AND UNMATCHED ALL ROW
+-- MY SQL DOES NOT SUPPORT DIRRECT FULL OUTER JOIN
+-- Simulating FULL OUTER JOIN in MySQL
+SELECT * 
+FROM CUSTOMERS AS CR
+LEFT JOIN ORDERS AS ORD
+  ON CR.CUSTOMERID = ORD.CUSTOMERID
+
+UNION
+
+SELECT * 
+FROM CUSTOMERS AS CR
+RIGHT JOIN ORDERS AS ORD
+  ON CR.CUSTOMERID = ORD.CUSTOMERID;
