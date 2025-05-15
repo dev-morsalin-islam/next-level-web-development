@@ -19,4 +19,6 @@ SELECT * FROM BOOK
 	WHERE NAME LIKE('%I%') OR NAME LIKE('C__c_i%') OR NAME LIKE('%STACK%');
     -- NAME MAY BE ___i___ OR C--c-i____ OR ____STACK____
     
-    
+   -- SQL IN  
+SELECT * FROM BOOK
+	WHERE NAME IN ('LEARN SQL EASILY', 'FLUENT PYTHON');
