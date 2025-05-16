@@ -1,0 +1,58 @@
+
+-- OBJECTIVE : WORKING WITH SQL UNION
+CREATE DATABASE COLLAGE;
+USE COLLAGE;
+
+CREATE TABLE STUDENT(
+	NAME VARCHAR(50),
+    SID INTEGER NOT NULL
+    
+);
+
+
+CREATE TABLE TEACHER(
+	NAME VARCHAR(100),
+    TID INTEGER NOT NULL,
+    SUBJECT VARCHAR(200)
+);
+
+
+-- INSERTION
+INSERT INTO STUDENT(NAME, SID)
+VALUES
+	('MORSALIN ISLAM', 635675),
+    ('MOTIUR RAHMAN',  53432),
+    ('RUKUNUZZAMAN', 2343423);
+
+INSERT INTO TEACHER(NAME, TID, SUBJECT)
+VALUES
+	('PULIN BIHARI ODHIKARI', 234, 'BANGLA-2'),
+    ('MONJUARA BEGUM', 2343, 'ICT'),
+    ('AL AMIN HASAN', 2343, 'ENGLISH');
+    
+
+
+-- NOW WORKI WITH SQL UNION
+/*
+	THERE ARE TWO TYPES OF UNION
+		i) Union => return two table merge rows. avoid duplicate
+        ii) Full Uinon => return tow table mergs rows. dont avoid duplicate
+        
+*/
+
+/*
+	To work with Union, we have to select same number of rows and their data type will be same
+*/
+
+SELECT NAME, SID AS ID FROM STUDENT -- RETURN VARCHAR, INTEGER
+	UNION 
+SELECT NAME, TID FROM TEACHER; -- RETURN VARCHAR, INTEGER
+
+
+
+
+
+
+
+
+
