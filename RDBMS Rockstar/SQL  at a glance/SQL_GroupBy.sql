@@ -35,3 +35,11 @@ INSERT INTO Customers (CustomerID, CustomerName, ContactName, Address, City, Pos
 SELECT COUNT(COUNTRY), COUNTRY FROM CUSTOMERS -- To work with group by can select row with aggrigate function and row that we apply group by. We can't  select other column without aggricate function
 
 	GROUP BY COUNTRY;
+    
+    
+-- woking with having 
+
+SELECT COUNT(COUNTRY) AS 'TOTAL', COUNTRY
+	FROM CUSTOMERS
+    GROUP BY COUNTRY
+		HAVING COUNTRY IN ('GERMANY', 'MEXICO', 'FRANCE', 'SPAIN');
