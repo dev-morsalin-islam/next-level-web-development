@@ -16,6 +16,7 @@ CREATE TABLE Customers (
 
 
 
+
 -- NOW INSERT DATA TO APPLY QUERY
 
 
