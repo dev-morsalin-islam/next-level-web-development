@@ -1,0 +1,14 @@
+
+-- problem link: https://www.hackerrank.com/challenges/weather-observation-station-5
+
+-- language: mySQL
+
+SELECT CITY, CHAR_LENGTH(CITY) FROM STATION
+    WHERE CHAR_LENGTH(CITY) = (SELECT MAX(CHAR_LENGTH(CITY)) FROM STATION)
+    ORDER BY CITY
+    LIMIT 1;
+    
+SELECT CITY, CHAR_LENGTH(CITY) FROM STATION
+      WHERE CHAR_LENGTH(CITY) = (SELECT MIN(CHAR_LENGTH(CITY)) FROM STATION)
+      ORDER BY CITY
+      LIMIT 1;
