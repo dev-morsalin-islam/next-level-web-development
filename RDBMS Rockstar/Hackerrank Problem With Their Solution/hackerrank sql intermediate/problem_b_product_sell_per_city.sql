@@ -1,9 +1,5 @@
 
 
-/*
-    Task: for each pair of city and product return the names of city and product as well the total amount spent on the product to 2 decimal places.
-    Order the result by the amount spent from high to low then by city name and product name in ascending order
-*/
 
 -- making all tables
 
@@ -184,3 +180,35 @@ INSERT INTO INVOICE_ITEM (ID, INVOICE_ID, PRODUCT_ID, QUANTITY, PRICE, LINE_TOTA
     (18, 12, 2, 3.03, 76.50, 231.85),
     (19, 19, 16, 2.62, 141.90, 371.78),
     (20, 17, 15, 4.31, 95.65, 412.27);
+
+
+/*
+    Task: for each pair of city and product return the names of city and product as well the total amount spent on the product to 2 decimal places.
+    Order the result by the amount spent from high to low then by city name and product name in ascending order
+*/
+
+SELECT
+    C.CITY_NAME,
+    P.PRODUCT_NAME,
+    ROUND(SUM(INV_ITEM.LINE_TOTAL_PRICE),2) 
+FROM CITY AS C
+INNER JOIN CUSTOMER AS CU
+    ON C.ID = CU.CITY_ID
+INNER JOIN INVOICE AS INV
+    ON INV.CUSTOMER_ID = CU.ID
+INNER JOIN INVOICE_ITEM AS INV_ITEM
+    ON INV_ITEM.INVOICE_ID = INV.ID
+INNER JOIN PRODUCT AS P
+    ON P.ID = INV_ITEM.PRODUCT_ID
+
+GROUP BY 
+    C.CITY_NAME,
+    P.PRODUCT_NAME
+
+ORDER BY
+    SUM(INV_ITEM.LINE_TOTAL_PRICE) DESC,
+    C.CITY_NAME,
+    P.PRODUCT_NAME;
+
+
+
