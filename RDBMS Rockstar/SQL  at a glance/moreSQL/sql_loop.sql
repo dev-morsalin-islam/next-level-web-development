@@ -1,0 +1,48 @@
+
+
+SELECT EMPLOYEE_ID, EMPLOYEE_NAME, DEPARTMENT_ID, SALARY, HIRE_DATE FROM EMPLOYEES;
+
+CREATE TABLE COPY_TABLE
+(
+    ID INT,
+    NAME VARCHAR(150),
+    SALARY INT
+);
+
+
+DO
+$$
+    -- DECLARATION
+    DECLARE
+        REC RECORD; -- REC VARIABLE DATA TYPE WILL BE RECORD
+
+     
+    BEGIN
+           FOR REC IN SELECT 
+            EMPLOYEE_ID, 
+            EMPLOYEE_NAME, 
+            DEPARTMENT_ID, 
+            SALARY, 
+            HIRE_DATE 
+                FROM EMPLOYEES
+            LOOP
+                IF REC.SALARY > 50000 THEN -- INSERT THOSE EMPLOYEES WHO GET GREATER THEN 50k SALARY
+                    -- MY CUSTOM CONDITION 
+                    INSERT INTO COPY_TABLE(ID, NAME, SALARY)
+                    VALUES
+                        (REC.EMPLOYEE_ID, REC.EMPLOYEE_NAME, REC.SALARY);
+
+                END IF;
+            END LOOP;
+    END
+$$;
+SELECT * FROM COPY_TABLE;
+
+/*
+    PROCESS
+    MAKE A TABLE
+    DECLARE A VARIABLE TYPE RECORD
+    FOR VARIABLE IN QUERY LOOP
+        WORK
+    END LOOP;
+*/
