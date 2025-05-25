@@ -1,7 +1,9 @@
--- Active: 1747581627427@@127.0.0.1@5432@conservation_db
+
 
 -- DATABASE CREATION
+
 CREATE DATABASE CONSERVATION_DB;
+
 
 
 -- ALL TABLE CREATION
@@ -13,12 +15,14 @@ CREATE  TABLE RANGERS(
 );
 
 
+
+
 CREATE TABLE SPECIES(
     SPECIES_ID SERIAL PRIMARY KEY,
     COMMON_NAME VARCHAR(200) NOT NULL,
     SCIENTIFIC_NAME VARCHAR(200) UNIQUE NOT NULL,
     DISCOVERY_DATE DATE CHECK (DISCOVERY_DATE <= CURRENT_DATE),
-    CONSERVATION_STATUS VARCHAR(100) NOT NULL CHECK (CONSERVATION_STATUS IN ('Least Concern', 'Near Threatened', 'Vulnerable', 'Endangered', 'Critically Endangered', 'Extinct in the Wild', 'Extinct'))
+    CONSERVATION_STATUS VARCHAR(100) NOT NULL CHECK (CONSERVATION_STATUS IN ('Least Concern', 'Near Threatened', 'Vulnerable', 'Endangered', 'Critically Endangered', 'Extinct in the Wild', 'Extinct','Historic', 'Safe'))
 
 );
 
@@ -129,7 +133,7 @@ $$;
  -- ##### TESTING ###
 CALL REGISTER_RANGER('Derek Fox', 'Coastal Plains');
 -- CHECK IF INSERTED OR NOT
--- SELECT * FROM RANGERS; WHERE NAME = 'Derek Fox'; -- CHECK IF INSERTED OR NOT
+-- SELECT * FROM RANGERS WHERE NAME = 'Derek Fox'; -- CHECK IF INSERTED OR NOT
 
 
 
@@ -288,3 +292,4 @@ SELECT * FROM MOST_RECENT_SIGHTINGS(2);
 -- QUERY: 8️⃣ Label each sighting's time of day as 'Morning', 'Afternoon', or 'Evening' 
 -- QUERY: 9️⃣ Delete rangers who have never sighted any species 
 
+ALTER TABLE SPECIES
