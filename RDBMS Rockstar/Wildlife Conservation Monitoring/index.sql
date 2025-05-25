@@ -41,7 +41,6 @@ CREATE TABLE SIGHTINGS(
 
 
 
-SELECT * FROM SIGHTINGS;
 
 
 
@@ -50,7 +49,7 @@ SELECT * FROM SIGHTINGS;
 -- RANGERS TABLE INSERTION
 INSERT INTO RANGERS (NAME, REGION) 
 VALUES
-    ('Derek Fox', 'Coastal Plains'),
+    
     ('Amit Roy', 'Sundarbans'),
     ('Priya Das', 'Kaziranga'),
     ('Rahul Sen', 'Gir Forest'),
@@ -80,12 +79,14 @@ VALUES
     ('Red Panda', 'Ailurus fulgens', '1825-01-01', 'Endangered'),
     ('Blackbuck', 'Antilope cervicapra', '1758-01-01', 'Near Threatened');
 
+
 -- SIGHTINGS TABLE INSERTION
 INSERT INTO SIGHTINGS (
         RANGER_ID, 
         SPECIES_ID, 
         SIGHTING_TIME, 
-        LOCATION, NOTES
+        LOCATION, 
+        NOTES
     ) 
 VALUES
     (1, 1, '2024-05-20 08:30:00', 'Coastal Plains North', 'Tiger seen near riverbank'),
@@ -97,7 +98,12 @@ VALUES
     (7, 7, '2024-05-26 11:30:00', 'Eastern Himalayas Ridge', 'Gharial near stream'),
     (8, 8, '2024-05-27 15:00:00', 'Satpura Range Lake', 'Bustard in grassland'),
     (9, 9, '2024-05-28 13:45:00', 'Central Plains Wetland', 'Red panda climbing tree'),
-    (10, 10, '2024-05-29 17:25:00', 'Desert Fringe Oasis', 'Blackbuck herd running');
+    (10, 10, '2024-05-29 17:25:00', 'Desert Fringe Oasis', 'Blackbuck herd running')
+    (3, 6, '2024-05-30 09:00:00', 'Mountain Pass East', 'Rhino crossing the pass'),
+    (4, 5, '2024-05-31 14:20:00', 'Snow Leopard Pass', 'Snow leopard spotted on pass'),
+    (5, 4, '2024-06-01 07:45:00', 'Tiger Pass', 'Tiger tracks found on the pass'),
+    (6, 3, '2024-06-02 12:10:00', 'River Pass', 'Gharial seen near river pass'),
+    (7, 2, '2024-06-03 17:30:00', 'Elephant Pass', 'Elephant herd moving through pass');
 
 
 -- QUERY:1️⃣ Register a new ranger with provided data with name = 'Derek Fox' and region = 'Coastal Plains'
@@ -118,11 +124,12 @@ $$
     END;
 $$;
 
-DROP PROCEDURE REGISTER_RANGER;
+
 
  -- ##### TESTING ###
 CALL REGISTER_RANGER('Derek Fox', 'Coastal Plains');
--- SELECT * FROM RANGERS WHERE NAME = 'Derek Fox'; -- CHECK IF INSERTED OR NOT
+-- CHECK IF INSERTED OR NOT
+-- SELECT * FROM RANGERS; WHERE NAME = 'Derek Fox'; -- CHECK IF INSERTED OR NOT
 
 
 
@@ -146,7 +153,7 @@ $$
     END;
 $$;
 
-DROP FUNCTION COUNT_UNIQUE_SPECIES_EVER_SIGHTED;
+
 -- ##### TESTING #####
 SELECT COUNT_UNIQUE_SPECIES_EVER_SIGHTED() AS UNIQUE_SPECIES_COUNT;
 
@@ -159,15 +166,124 @@ SELECT COUNT_UNIQUE_SPECIES_EVER_SIGHTED() AS UNIQUE_SPECIES_COUNT;
 CREATE OR REPLACE FUNCTION FIND_SIGHTINGS_WITH_SAMPLE_LOCATION(P_SAMPLE_LOCATION VARCHAR(250))
 RETURNS TABLE(
     SIGHTING_ID INT,
-    RANGER_ID INT,
     SPECIES_ID INT,
+    RANGER_ID INT,
     SIGHTING_TIME TIMESTAMP,
     LOCATION VARCHAR(260),
     NOTES VARCHAR(500)
 )
+LANGUAGE PLPGSQL
+AS
+$$
+    BEGIN
+        RETURN QUERY 
+        SELECT 
+            S.SIGHTING_ID,
+            S.SPECIES_ID,
+            S.RANGER_ID,
+            S.SIGHTING_TIME,
+            S.LOCATION,
+            S.NOTES
+        FROM SIGHTINGS AS S 
+            WHERE S.LOCATION LIKE '%' || P_SAMPLE_LOCATION || '%'; -- MAKE IT DYNAMIC
+    END;
+$$;
+
+
+
+
+-- ##### TESTING ############
+
+SELECT * FROM FIND_SIGHTINGS_WITH_SAMPLE_LOCATION('Pass'); -- note that we have to pass case sensitive string.
+
+
+-- #############################################################################
+
+
 -- QUERY: 4️⃣ List each ranger's name and their total number of sightings
+CREATE OR REPLACE FUNCTION RANGER_SIGHTINGS_COUNT()
+RETURNS TABLE(
+    NAME VARCHAR(200),
+    TOTAL_SIGHTINGS INT
+    )
+LANGUAGE PLPGSQL
+AS
+$$
+    BEGIN
+        RETURN QUERY
+        SELECT
+            RN.NAME,
+            COUNT(RN.NAME)::INT AS "TOTAL_SIGHTINGS" -- TYPE CASTING  BIG INT TO INT
+        FROM RANGERS AS RN
+        INNER JOIN SIGHTINGS AS SIG
+            ON SIG.RANGER_ID = RN.RANGER_ID
+        GROUP BY RN.NAME;
+
+    END;
+$$;
+
+
+-- ######## TESTING #########
+
+SELECT * FROM RANGER_SIGHTINGS_COUNT();
+
 -- QUERY: 5️⃣ List species that have never been sighted
+CREATE OR REPLACE FUNCTION SPECIES_NEVER_SIGHTED()
+RETURNS TABLE(COMMON_NAME VARCHAR(200))
+LANGUAGE PLPGSQL
+AS
+$$
+    BEGIN
+        RETURN QUERY
+        SELECT SP.COMMON_NAME
+            FROM SPECIES AS SP
+        LEFT JOIN SIGHTINGS AS SI
+            ON SP.SPECIES_ID = SI.SPECIES_ID
+        WHERE SI.SPECIES_ID IS NULL;
+        
+        
+    END;
+$$;
+
+-- ########## TESTING ######
+SELECT * FROM SPECIES_NEVER_SIGHTED();
+
+-- #####################################################
+
+
+
 -- QUERY: 6️⃣ Show the most recent 2 sightings
+
+
+CREATE OR REPLACE FUNCTION MOST_RECENT_SIGHTINGS(P_LIMIT INT)
+RETURNS TABLE(
+    COMMON_NAME VARCHAR(200),
+    SIGHTING_TIME TIMESTAMP,
+    "name" VARCHAR(200)
+)
+LANGUAGE PLPGSQL
+AS
+$$
+    BEGIN
+        RETURN QUERY
+        SELECT
+            SP.COMMON_NAME,
+            SIG.SIGHTING_TIME,
+            RN.NAME
+        FROM SPECIES AS SP
+            INNER JOIN SIGHTINGS AS SIG
+                ON SP.SPECIES_ID = SIG.SPECIES_ID
+            INNER JOIN RANGERS AS RN
+                ON RN.RANGER_ID = SIG.RANGER_ID
+        LIMIT P_LIMIT;
+    END;
+$$;
+
+
+
+-- ###### TESTING #######
+SELECT * FROM MOST_RECENT_SIGHTINGS(2);
+
 -- QUERY: 7️⃣ Update all species discovered before year 1800 to have status 'Historic'
 -- QUERY: 8️⃣ Label each sighting's time of day as 'Morning', 'Afternoon', or 'Evening' 
 -- QUERY: 9️⃣ Delete rangers who have never sighted any species 
