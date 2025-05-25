@@ -78,7 +78,7 @@ VALUES
     (3, 3, '2024-05-22 16:45:00', 'Gir Forest Range 5');
 
 
-
+--
 -- QUERY:1️⃣ Register a new ranger with provided data with name = 'Derek Fox' and region = 'Coastal Plains'
 
 CREATE OR REPLACE PROCEDURE REGISTER_RANGER(
@@ -104,8 +104,34 @@ CALL REGISTER_RANGER('Derek Fox', 'Coastal Plains');
 
 
 
-
+-- ##############################################################################
 -- QUERY: 2️⃣ Count unique species ever sighted
+CREATE OR REPLACE FUNCTION COUNT_UNIQUE_SPECIES_EVER_SIGHTED()
+RETURNS INTEGER
+LANGUAGE PLPGSQL
+AS
+$$
+    DECLARE RESULT INT;
+
+    BEGIN
+        SELECT COUNT(DISTINCT SP.SPECIES_ID)
+            FROM SPECIES AS SP 
+
+            INNER JOIN SIGHTINGS AS SI
+                ON SP.SPECIES_ID = SI.SPECIES_ID
+            INTO RESULT;
+        RETURN RESULT;
+    END;
+$$;
+
+-- ##### TESTING #####
+SELECT COUNT_UNIQUE_SPECIES_EVER_SIGHTED() AS UNIQUE_SPECIES_COUNT;
+
+-- ##############################################################################
+
+
+
+
 -- QUERY: 3️⃣ Find all sightings where the location includes "Pass"
 -- QUERY: 4️⃣ List each ranger's name and their total number of sightings
 -- QUERY: 5️⃣ List species that have never been sighted
