@@ -1,5 +1,7 @@
 
 
+
+
 -- DATABASE CREATION
 
 CREATE DATABASE CONSERVATION_DB;
@@ -53,6 +55,7 @@ CREATE TABLE SIGHTINGS(
 -- RANGERS TABLE INSERTION
 INSERT INTO RANGERS (NAME, REGION) 
 VALUES
+   
     
     ('Amit Roy', 'Sundarbans'),
     ('Priya Das', 'Kaziranga'),
@@ -102,7 +105,7 @@ VALUES
     (7, 7, '2024-05-26 11:30:00', 'Eastern Himalayas Ridge', 'Gharial near stream'),
     (8, 8, '2024-05-27 15:00:00', 'Satpura Range Lake', 'Bustard in grassland'),
     (9, 9, '2024-05-28 13:45:00', 'Central Plains Wetland', 'Red panda climbing tree'),
-    (10, 10, '2024-05-29 17:25:00', 'Desert Fringe Oasis', 'Blackbuck herd running')
+    (10, 10, '2024-05-29 17:25:00', 'Desert Fringe Oasis', 'Blackbuck herd running'),
     (3, 6, '2024-05-30 09:00:00', 'Mountain Pass East', 'Rhino crossing the pass'),
     (4, 5, '2024-05-31 14:20:00', 'Snow Leopard Pass', 'Snow leopard spotted on pass'),
     (5, 4, '2024-06-01 07:45:00', 'Tiger Pass', 'Tiger tracks found on the pass'),
@@ -289,7 +292,62 @@ $$;
 SELECT * FROM MOST_RECENT_SIGHTINGS(2);
 
 -- QUERY: 7️⃣ Update all species discovered before year 1800 to have status 'Historic'
--- QUERY: 8️⃣ Label each sighting's time of day as 'Morning', 'Afternoon', or 'Evening' 
--- QUERY: 9️⃣ Delete rangers who have never sighted any species 
 
-ALTER TABLE SPECIES
+CREATE OR REPLACE PROCEDURE UPDATE_HISTORIC_SPECIES()
+LANGUAGE PLPGSQL
+AS
+$$
+    BEGIN
+        UPDATE SPECIES
+        SET CONSERVATION_STATUS = 'Historic'
+        WHERE EXTRACT(YEAR FROM DISCOVERY_DATE ) < 1800;
+        
+    END;
+$$;
+
+-- ###### TESTING ######
+CALL UPDATE_HISTORIC_SPECIES();
+
+-- SELECT *  FROM SPECIES;
+
+-- ##############################################################
+
+
+
+
+-- QUERY: 8️⃣ Label each sighting's time of day as 'Morning', 'Afternoon', or 'Evening' 
+
+CREATE OR REPLACE VIEW SIGHTINGS_LABELLED_TIME
+AS
+    SELECT S.SIGHTING_ID,
+    CASE
+        WHEN EXTRACT(HOUR FROM S.SIGHTING_TIME) < 12 THEN 'Morning'
+        WHEN EXTRACT(HOUR FROM S.SIGHTING_TIME) < 18 THEN 'Afternoon'
+        ELSE 'Evening'
+    END AS "time_of_day"
+    FROM SIGHTINGS AS S;
+
+-- ###### TESTING ######
+SELECT * FROM SIGHTINGS_LABELLED_TIME;
+
+-- QUERY: 9️⃣ Delete rangers who have never sighted any species
+
+CREATE OR REPLACE PROCEDURE DELETE_RANGERS_WITH_NO_SIGHTINGS()
+LANGUAGE PLPGSQL
+AS
+$$
+    BEGIN
+        DELETE FROM RANGERS AS RNG
+        WHERE RNG.RANGER_ID NOT IN(
+            SELECT DISTINCT SIG.RANGER_ID
+            FROM SIGHTINGS AS SIG
+        );
+    END;
+$$;
+
+
+-- ###### TESTING ######
+CALL DELETE_RANGERS_WITH_NO_SIGHTINGS();
+
+
+-- #######################################################
