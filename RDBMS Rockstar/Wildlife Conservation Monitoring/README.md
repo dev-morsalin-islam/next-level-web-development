@@ -1,4 +1,4 @@
-# Mastering PostgreSQL: From Queries to Joins
+
 
 # What is PostgreSQL?
 
