@@ -282,6 +282,7 @@ $$
                 ON SP.SPECIES_ID = SIG.SPECIES_ID
             INNER JOIN RANGERS AS RN
                 ON RN.RANGER_ID = SIG.RANGER_ID
+        ORDER BY SIG.SIGHTING_TIME DESC
         LIMIT P_LIMIT;
     END;
 $$;
