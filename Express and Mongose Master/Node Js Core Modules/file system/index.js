@@ -19,3 +19,18 @@ const fs = require("fs");
     });
 
 
+
+
+    // synchronously write to a file
+
+    // fs.writeFileSync('./output.txt', "hello world", 'utf-8');
+
+
+
+    // asynchronously write to a file
+
+    fs.writeFile('./output.txt', "hello world from index.js", 'utf-8', (error) => {
+        if(error) console.error("Error occoured while writing to file:", error);
+    });
+
+
