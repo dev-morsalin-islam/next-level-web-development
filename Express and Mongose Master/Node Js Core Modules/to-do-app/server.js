@@ -12,7 +12,17 @@ const server = http.createServer((request, response) =>{
     }
     else if(request.url === "/allTodos" && request.method === "GET")
     {
-        response.end("<h1> All Todos</h1>")
+        response.writeHead(200, {
+            "content-type": "application/json",
+            "another_header": "custom_value",
+        })
+        // writeHead is used to set the status code and headers of the response
+        
+        response.end(JSON.stringify([
+            { id: 1, title: "Todo 1", completed: false },
+            { id: 2, title: "Todo 2", completed: true },
+            { id: 3, title: "Todo 3", completed: false }
+        ]));
     }
     else if(request.url === "/createTodo" && request.method === "POST")
     {
