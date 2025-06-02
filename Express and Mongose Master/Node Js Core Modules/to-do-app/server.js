@@ -1,6 +1,12 @@
 
 
 const http = require("http");
+const fs = require("fs");
+const path = require("path");
+
+
+var dir = path.join(__dirname, "db/todo.json");
+const fileContent = fs.readFileSync(dir, {encoding:"utf-8"});
 
 const server = http.createServer((request, response) =>{
     // console.log("Request: ", request );
@@ -17,12 +23,8 @@ const server = http.createServer((request, response) =>{
             "another_header": "custom_value",
         })
         // writeHead is used to set the status code and headers of the response
-        
-        response.end(JSON.stringify([
-            { id: 1, title: "Todo 1", completed: false },
-            { id: 2, title: "Todo 2", completed: true },
-            { id: 3, title: "Todo 3", completed: false }
-        ]));
+
+        response.end(fileContent);
     }
     else if(request.url === "/createTodo" && request.method === "POST")
     {

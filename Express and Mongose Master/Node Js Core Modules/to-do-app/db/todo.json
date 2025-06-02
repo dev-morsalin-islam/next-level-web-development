@@ -1,0 +1,28 @@
+
+    [
+        {
+            "id": 1,
+            "task": "Buy groceries",
+            "completed": false
+        },
+        {
+            "id": 2,
+            "task": "Walk the dog",
+            "completed": true
+        },
+        {
+            "id": 3,
+            "task": "Finish homework",
+            "completed": false
+        },
+        {
+            "id": 4,
+            "task": "Clean the house",
+            "completed": true
+        },
+        {
+            "id": 5,
+            "task": "Prepare dinner",
+            "completed": false
+        }
+    ]
