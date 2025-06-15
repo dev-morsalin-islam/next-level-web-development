@@ -26,9 +26,26 @@ const server = http.createServer((request, response) =>{
 
         response.end(fileContent);
     }
-    else if(request.url === "/createTodo" && request.method === "POST")
+    else if(request.url === "/create-todo" && request.method === "POST")
     {
-        response.end("<h1> Create Todo</h1>")
+        response.writeHead(201,{
+            "content-type": "application/json",
+
+        })
+        
+        var data = "";
+        request.on("data", (chunk)=>
+            {
+                data += chunk; // data is a json format string
+            }
+        )
+        request.on("end", ()=>{
+            const prevTodos = JSON.parse(fileContent); // parse the json string to an array of objects
+            const newTodo = JSON.parse(data); // parse the json string to an object
+            prevTodos.push(newTodo); // add the new todo to the array of todos
+            fs.writeFileSync(dir, JSON.stringify(prevTodos,null,2),{encoding:"utf-8"}); // write the updated array of todos to the file
+            response.end(data); // send the new todo back to the client
+        })
     }
     else{
         response.end("<h1>404 Not Found</h1>");
