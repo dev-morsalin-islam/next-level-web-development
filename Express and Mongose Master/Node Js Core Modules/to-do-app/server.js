@@ -5,8 +5,8 @@ const fs = require("fs");
 const path = require("path");
 
 
-var dir = path.join(__dirname, "db/todo.json");
-const fileContent = fs.readFileSync(dir, {encoding:"utf-8"});
+var dir = path.join(__dirname, "db/todo.json"); // __dirname is the directory name of the current module
+const fileContent = fs.readFileSync(dir, {encoding:"utf-8"}); // read the file
 
 const server = http.createServer((request, response) =>{
     // console.log("Request: ", request );
@@ -24,7 +24,7 @@ const server = http.createServer((request, response) =>{
         })
         // writeHead is used to set the status code and headers of the response
 
-        response.end(fileContent);
+        response.end(fileContent); // show file content in the browser after reading the file
     }
     else if(request.url === "/create-todo" && request.method === "POST")
     {
@@ -34,7 +34,7 @@ const server = http.createServer((request, response) =>{
         })
         
         var data = "";
-        request.on("data", (chunk)=>
+        request.on("data", (chunk)=> // "data" event is emitted when a chunk of data is available to read
             {
                 data += chunk; // data is a json format string
             }
